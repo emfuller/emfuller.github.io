@@ -1,11 +1,11 @@
 ### GENERAL SETTINGS ###
 
 # Site settings
-title: SOLID.
-description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
+title: Emma Fuller
+description: "Hi I'm Emma. I’m a PhD student interested in how humans exact change on the food-webs of which they are part "
 analytics: #Google analytics code in the format XX-nnnnnnnn-n
 baseurl: "" #important: start with /
-url: "http://yourdomain.com"
+url: "http://emfuller/emfuller.github.io"
 
 # Build settings
 markdown: kramdown
