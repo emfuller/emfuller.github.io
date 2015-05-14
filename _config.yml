@@ -4,7 +4,7 @@ email:       efuller@princeton.edu
 author:      Emma Fuller
 description: "Emma Fuller is a PhD candidate currently studying ecology at Princeton University."
 baseurl:     ""
-url:         ""
+url:         "http://emfuller.github.io"
 
 # Google analytics
 google_analytics:
