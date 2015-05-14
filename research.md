@@ -4,7 +4,7 @@ permalink: /research/
 ---
 
 # Dissertation!
-My dissertation is focused on understanding how commercial fishermen effect (and are affected by) the marine ecosystems from which they harvest. Using a large datasets describing commercial fishing, fish abundance and environmental data, I'm examining the implications of human coupling of disparate marine food webs. 
+My dissertation is focused on understanding how commercial fishermen affect (and are influenced by) the marine ecosystems from which they harvest. Using a large datasets describing commercial fishing, fish abundance and environmental data, I'm examining the implications of human coupling of disparate marine food webs. 
 
 Collaborators: Jameal Samhouri, James Watson, Emily Klein, Matthieu Barbier, Andrew Tilman
 
