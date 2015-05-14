@@ -22,9 +22,6 @@ ssh efuller@della.princeton.edu
 
 `nobel` are entry linux servers for beginners.
 
-
-some other things
-
 `qstat -u efuller` to check status of jobs
 
 `sbatch run_job.sh` to run the job
@@ -32,9 +29,8 @@ some other things
 
 Always change `ntasks` first before `N` in the `run_job.sh` code.
 
-Also see Bridgett's wiki on using the research computers:
-
-http://openwetware.org/wiki/VonHoldt:High_Throughput_Sequencing_Resources
+Also see [Bridgett's wiki](http://openwetware.org/wiki/VonHoldt:High_Throughput_Sequencing_Resources
+) on using the research computers:
 
 `scancel jobID` will cancel a job.
 

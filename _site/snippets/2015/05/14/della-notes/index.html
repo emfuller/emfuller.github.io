@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Pixyll has Pagination &#8211; Emma Fuller</title>
+    <title>Accessing Princeton's cluster &#8211; Emma Fuller</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="This is an empty post to illustrate the pagination component with Pixyll.">
+    <meta name="description" content="Notes on how to use della">
     <meta name="author" content="Emma Fuller">
-    <meta name="keywords" content="jekyll, pixyll">
-    <link rel="canonical" href="/jekyll/pixyll/2014/06/08/pixyll-has-pagination/">
+    <meta name="keywords" content="snippets">
+    <link rel="canonical" href="http://emfuller.github.io/snippets/2015/05/14/della-notes/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/pixyll.css" type="text/css">
@@ -25,9 +25,9 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Pixyll has Pagination">
+    <meta property="og:title" content="Accessing Princeton&#39;s cluster">
     <meta property="og:description" content="Emma Fuller is a PhD candidate currently studying ecology at Princeton University.">
-    <meta property="og:url" content="/jekyll/pixyll/2014/06/08/pixyll-has-pagination/">
+    <meta property="og:url" content="http://emfuller.github.io/snippets/2015/05/14/della-notes/">
     <meta property="og:site_name" content="Emma Fuller">
 
     <!-- Icons -->
@@ -47,6 +47,17 @@
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
         
     
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-62979311-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    
 </head>
 
 <body class="">
@@ -54,7 +65,7 @@
     <header class="site-header px2 px-responsive">
   <div class="mt2 wrap">
     <div class="measure">
-      <a href="" class="site-title">Emma Fuller</a>
+      <a href="http://emfuller.github.io" class="site-title">Emma Fuller</a>
       <nav class="site-nav right">
         <a href="/about/">About</a>
 <a href="/cv/">CV</a>
@@ -99,17 +110,52 @@
         
 
 
-
-
 <div class="post-header mb2">
-  <h1>Pixyll has Pagination</h1>
-  <span class="post-meta">Jun 8, 2014</span><br>
+  <h1>Accessing Princeton's cluster</h1>
+  <span class="post-meta">May 14, 2015</span><br>
   
   <span class="post-meta small">1 minute read</span>
 </div>
 
 <article class="post-content">
-  <p>This is an empty post to illustrate the pagination component with Pixyll.</p>
+  <p>To log onto della first log on to nobel</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">ssh efuller@nobel.princeton.edu
+</code></pre></div>
+<p>From there can log into della</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">ssh efuller@della.princeton.edu
+</code></pre></div>
+<p><code>\tigress\efuller</code> is where I should keep my scripts, write out data to</p>
+
+<p><code>nobel</code> are entry linux servers for beginners.</p>
+
+<p><code>qstat -u efuller</code> to check status of jobs</p>
+
+<p><code>sbatch run_job.sh</code> to run the job
+<code>qdel jobnum</code> to kill a job that&rsquo;s running</p>
+
+<p>Always change <code>ntasks</code> first before <code>N</code> in the <code>run_job.sh</code> code.</p>
+
+<p>Also see <a href="http://openwetware.org/wiki/VonHoldt:High_Throughput_Sequencing_Resources">Bridgett&rsquo;s wiki</a> on using the research computers:</p>
+
+<p><code>scancel jobID</code> will cancel a job.</p>
+
+<p>Also some scp commands to get the models back down from <code>della</code> via <code>nobel</code></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">scp model_* efuller@nobel.princeton.edu:/n/homeserver2/user2a/efuller
+
+scp efuller@nobel.princeton.edu:/n/homeserver2/user2a/efuller/model_* .
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">scontrol show jobid 1109549
+</code></pre></div>
+<p>Gives start time</p>
+
+<p>Runtime notes</p>
+
+<p>Square matrix: how many entries, times the number of bytes per entry (8 because it&rsquo;s real). 12 GB is about half a node. Submit it to the test node (runtime less than one hour). Then run <code>scontrol</code> to see which node it&rsquo;s on.</p>
+
+<p>Then ssh to node
+`<code>
+ssh della-r1c3n5
+</code>
+Then run <code>top</code> to see how much memory it&rsquo;s using.</p>
 
 </article>
 
@@ -119,11 +165,19 @@
 
   <div class="share-links">
     
-
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://emfuller.github.io/snippets/2015/05/14/della-notes/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
     
 
     
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Accessing Princeton's cluster&url=http://emfuller.github.io/snippets/2015/05/14/della-notes/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
 
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://emfuller.github.io/snippets/2015/05/14/della-notes/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://emfuller.github.io/snippets/2015/05/14/della-notes/&title=Accessing Princeton's cluster" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
     
 
     
