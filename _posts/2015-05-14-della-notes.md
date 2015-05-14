@@ -1,8 +1,9 @@
 ---
-layout:post
-title: Accessing Princeton's cluster
-summary: Notes on how to use della
-category: snippets
+layout:     post
+title:      Accessing Princeton's cluster
+date:       2015-05-14 09:33:00
+summary:    Notes on how to use della
+categories: snippets
 ---
 
 To log onto della first log on to nobel
