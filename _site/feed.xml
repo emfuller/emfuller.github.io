@@ -7,6 +7,93 @@
     <atom:link href="http://emfuller.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>code for overlaying polygons and rasters</title>
+        <description>&lt;p&gt;I&amp;rsquo;ve been learning &lt;code&gt;R&lt;/code&gt;s spatial capacities from scratch, which inevitably results in taking wrong turns. This code is to remind me the route if I have polygons in which I want to extract raster data.&lt;/p&gt;
+
+&lt;p&gt;Instead what I had were coordinates for which I wanted to know the landscape covariates within a certain radius. Turns out that instead of all this code, you can just use the &lt;code&gt;buffer&lt;/code&gt; option in the &lt;code&gt;extract()&lt;/code&gt; function. I.e.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;substrate &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; extract&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;raster&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; coordinates&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; buffer &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  method &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;simple&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;doh.&lt;/p&gt;
+
+&lt;p&gt;The code below also assumes that both the polygons and rasters are in the same projection.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# this all works, but it&amp;#39;s slow. it takes 20 minutes per polygon.&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# doing it all together with extract() using the buffer command&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# takes a bit more than an hour. keeping this for posterity.&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# for each port polygon, find the amount of substrate types in each&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;sp&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;raster&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rgdal&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# get port polygons&lt;/span&gt;
+port_polys &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;dir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;port_polys/&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+port_polys &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; port_polys&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;grep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;.dbf&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; port_polys&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+port_polys &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; port_polys&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;grep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;.shp&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; port_polys&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+port_polys &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; port_polys&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;grep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;.shx&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; port_polys&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+port_polys &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;gsub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;.prj&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; port_polys&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+hab_types &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;poly&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+  rasterOptions&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;maxmemory&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5e+08&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;chunksize&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5e+07&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# for 500mb max memory (up from 100gb by default),&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# and 50mb of chunk size (up from 10mb).&lt;/span&gt;
+
+  port_df &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; readOGR&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;port_polys/&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;poly&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  hab &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; raster&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;coastal_habitat_type1.tif&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# check to make sure interesect&lt;/span&gt;
+    &lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;is.null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;intersect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;extent&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;hab&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; extent&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;port_df&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;kp&quot;&gt;warning&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;habitat raster has no overlap&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)}&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# crop raster down&lt;/span&gt;
+    clip1 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; crop&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;hab&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; extent&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;port_df&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# mask to just polygon&lt;/span&gt;
+    fr &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; rasterize&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;port_df&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; clip1&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    clip2 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; mask&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;clip1&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; fr&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# find the area of each habitat type&lt;/span&gt;
+    ext &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; extract&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;clip2&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; port_df&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; method &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;simple&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# make table&lt;/span&gt;
+    tab &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;lapply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ext&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;table&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    s&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tab&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;#sums the table for percentage calculation&lt;/span&gt;
+    mat&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;as.data.frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tab&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# saves meters squared&lt;/span&gt;
+    mat&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;Freq &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; mat&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;Freq&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1e6&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# convert from m2 to km2&lt;/span&gt;
+    mat2&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;as.data.frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tab&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;s&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#calculates percent&lt;/span&gt;
+    final&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;cbind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;port_df&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;data&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;Pcid&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;mat&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;mat2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;Freq&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;#combines into single dataframe&lt;/span&gt;
+    write.csv&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;final&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;paste0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;poly&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;.csv&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+  &lt;span class=&quot;kr&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;final&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+hab_types&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;port_polys&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+        <pubDate>Tue, 26 May 2015 00:00:00 -0400</pubDate>
+        <link>http://emfuller.github.io/snippets/2015/05/26/rasters-polygons/</link>
+        <guid isPermaLink="true">http://emfuller.github.io/snippets/2015/05/26/rasters-polygons/</guid>
+      </item>
+    
+      <item>
+        <title>how to organize reading?</title>
+        <description>&lt;p&gt;I&amp;rsquo;m getting to the stage of my PhD where I have substantial content that needs to be written down. Writing has always been hard for me, but based on personal observation and much advice, I&amp;rsquo;m striving to publish as much as possible while in grad school.&lt;/p&gt;
+
+&lt;p&gt;With that in mind, I&amp;rsquo;ve had to start re-engaging with the literature in a serious way to write introductions. This has led me to realize a) I&amp;rsquo;m not very good about keeping up with the literature and b) have a very poor organizational structure to keep track of what I&amp;rsquo;ve read and what I thought about it.&lt;/p&gt;
+
+&lt;p&gt;In between running chunks of code, I took a procrastinatory dive into the internet to see what other people recommended.&lt;/p&gt;
+
+&lt;p&gt;Useful notes about reading:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Discussions by English majors about how to keep track of notes/ideas for long books is surprisingly relevant&lt;/li&gt;
+&lt;li&gt;Nice reminder: &amp;ldquo;quality of reading trumps quantity of books read.&amp;rdquo; From &lt;a href=&quot;http://ask.metafilter.com/31113/How-do-I-take-notes-on-big-books&quot;&gt;this&lt;/a&gt; thread.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Useful notes about using reading for writing&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Start writing and draft and re-draft with each new piece of information and reading. Not only do you start to have content on paper but it makes you ask the question &amp;ldquo;how does this literally change what I have to say&amp;rdquo; (from the &lt;a href=&quot;http://ask.metafilter.com/31113/How-do-I-take-notes-on-big-books&quot;&gt;same thread&lt;/a&gt; about long book reading)&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 15 May 2015 00:00:00 -0400</pubDate>
+        <link>http://emfuller.github.io/organization/research/2015/05/15/organize-reading/</link>
+        <guid isPermaLink="true">http://emfuller.github.io/organization/research/2015/05/15/organize-reading/</guid>
+      </item>
+    
+      <item>
         <title>Accessing Princeton&#39;s cluster</title>
         <description>&lt;p&gt;To log onto della first log on to nobel&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;ssh efuller@nobel.princeton.edu

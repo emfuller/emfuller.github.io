@@ -19,4 +19,4 @@ Useful notes about reading:
 
 Useful notes about using reading for writing
 
-+ Start writing and draft and re-draft with each new piece of information and reading. Not only do you start to have content on paper but it makes you ask the question "how does this literally change what I have to say" (from the [same thread](http://ask.metafilter.com/31113/How-do-I-take-notes-on-big-books) about long book reading
++ Start writing and draft and re-draft with each new piece of information and reading. Not only do you start to have content on paper but it makes you ask the question "how does this literally change what I have to say" (from the [same thread](http://ask.metafilter.com/31113/How-do-I-take-notes-on-big-books) about long book reading)

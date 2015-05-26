@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>code for overlaying polygons and rasters &#8211; Emma Fuller</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="example code for overlaying poygons on rasters to extract landscape covariates">
+    <meta name="author" content="Emma Fuller">
+    <meta name="keywords" content="snippets">
+    <link rel="canonical" href="http://emfuller.github.io/snippets/2015/05/26/rasters-polygons/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css" type="text/css">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="code for overlaying polygons and rasters">
+    <meta property="og:description" content="Emma Fuller is a PhD candidate currently studying ecology at Princeton University.">
+    <meta property="og:url" content="http://emfuller.github.io/snippets/2015/05/26/rasters-polygons/">
+    <meta property="og:site_name" content="Emma Fuller">
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+        
+    
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-62979311-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    
+</head>
+
+<body class="">
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://emfuller.github.io" class="site-title">Emma Fuller</a>
+      <nav class="site-nav right">
+        <a href="/about/">About</a>
+<a href="/cv/">CV</a>
+<a href="/research/">Research</a>
+<a href="/notes/">Notes and Things</a>
+
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="left">
+    
+      <a class="fa fa-github" href="https://github.com/emfuller"></a>
+    
+    
+    <a class="fa fa-rss" href="/feed.xml"></a>
+    
+    
+    
+      <a class="fa fa-envelope" href="mailto:efuller@princeton.edu"></a>
+    
+    
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        
+
+
+<div class="post-header mb2">
+  <h1>code for overlaying polygons and rasters</h1>
+  <span class="post-meta">May 26, 2015</span><br>
+  
+  <span class="post-meta small">2 minute read</span>
+</div>
+
+<article class="post-content">
+  <p>I&rsquo;ve been learning <code>R</code>s spatial capacities from scratch, which inevitably results in taking wrong turns. This code is to remind me the route if I have polygons in which I want to extract raster data.</p>
+
+<p>Instead what I had were coordinates for which I wanted to know the landscape covariates within a certain radius. Turns out that instead of all this code, you can just use the <code>buffer</code> option in the <code>extract()</code> function. I.e.</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r">substrate <span class="o">&lt;-</span> extract<span class="p">(</span>raster<span class="p">,</span> coordinates<span class="p">,</span> buffer <span class="o">=</span> <span class="m">100</span><span class="o">*</span><span class="m">1000</span><span class="p">,</span>
+  method <span class="o">=</span> <span class="s">&quot;simple&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>doh.</p>
+
+<p>The code below also assumes that both the polygons and rasters are in the same projection.</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># this all works, but it&#39;s slow. it takes 20 minutes per polygon.</span>
+<span class="c1"># doing it all together with extract() using the buffer command</span>
+<span class="c1"># takes a bit more than an hour. keeping this for posterity.</span>
+
+<span class="c1"># for each port polygon, find the amount of substrate types in each</span>
+<span class="kn">library</span><span class="p">(</span>sp<span class="p">);</span> <span class="kn">library</span><span class="p">(</span>raster<span class="p">);</span> <span class="kn">library</span><span class="p">(</span>rgdal<span class="p">)</span>
+
+<span class="c1"># get port polygons</span>
+port_polys <span class="o">&lt;-</span> <span class="kp">dir</span><span class="p">(</span><span class="s">&quot;port_polys/&quot;</span><span class="p">)</span>
+port_polys <span class="o">&lt;-</span> port_polys<span class="p">[</span><span class="o">-</span><span class="kp">grep</span><span class="p">(</span><span class="s">&quot;.dbf&quot;</span><span class="p">,</span> port_polys<span class="p">)]</span>
+port_polys <span class="o">&lt;-</span> port_polys<span class="p">[</span><span class="o">-</span><span class="kp">grep</span><span class="p">(</span><span class="s">&quot;.shp&quot;</span><span class="p">,</span> port_polys<span class="p">)]</span>
+port_polys <span class="o">&lt;-</span> port_polys<span class="p">[</span><span class="o">-</span><span class="kp">grep</span><span class="p">(</span><span class="s">&quot;.shx&quot;</span><span class="p">,</span> port_polys<span class="p">)]</span>
+port_polys <span class="o">&lt;-</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">&quot;.prj&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span> port_polys<span class="p">)</span>
+
+hab_types <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>poly<span class="p">){</span>
+  rasterOptions<span class="p">(</span>maxmemory<span class="o">=</span><span class="m">5e+08</span><span class="p">,</span>chunksize<span class="o">=</span><span class="m">5e+07</span><span class="p">)</span>
+  <span class="c1"># for 500mb max memory (up from 100gb by default),</span>
+  <span class="c1"># and 50mb of chunk size (up from 10mb).</span>
+
+  port_df <span class="o">&lt;-</span> readOGR<span class="p">(</span><span class="s">&quot;port_polys/&quot;</span><span class="p">,</span>poly<span class="p">)</span>
+  hab <span class="o">&lt;-</span> raster<span class="p">(</span><span class="s">&quot;coastal_habitat_type1.tif&quot;</span><span class="p">)</span>
+  <span class="c1"># check to make sure interesect</span>
+    <span class="kr">if</span><span class="p">(</span><span class="kp">is.null</span><span class="p">(</span><span class="kp">intersect</span><span class="p">(</span>extent<span class="p">(</span>hab<span class="p">),</span> extent<span class="p">(</span>port_df<span class="p">))))</span> <span class="p">{</span>
+      <span class="kp">warning</span><span class="p">(</span><span class="s">&quot;habitat raster has no overlap&quot;</span><span class="p">)}</span>
+  <span class="c1"># crop raster down</span>
+    clip1 <span class="o">&lt;-</span> crop<span class="p">(</span>hab<span class="p">,</span> extent<span class="p">(</span>port_df<span class="p">))</span>
+  <span class="c1"># mask to just polygon</span>
+    fr <span class="o">&lt;-</span> rasterize<span class="p">(</span>port_df<span class="p">,</span> clip1<span class="p">)</span>
+    clip2 <span class="o">&lt;-</span> mask<span class="p">(</span>clip1<span class="p">,</span> fr<span class="p">)</span>
+  <span class="c1"># find the area of each habitat type</span>
+    ext <span class="o">&lt;-</span> extract<span class="p">(</span>clip2<span class="p">,</span> port_df<span class="p">,</span> method <span class="o">=</span> <span class="s">&quot;simple&quot;</span><span class="p">)</span>
+  <span class="c1"># make table</span>
+    tab <span class="o">&lt;-</span> <span class="kp">lapply</span><span class="p">(</span>ext<span class="p">,</span> <span class="kp">table</span><span class="p">)</span>
+    s<span class="o">&lt;-</span><span class="kp">sum</span><span class="p">(</span>tab<span class="p">[[</span><span class="m">1</span><span class="p">]])</span>  <span class="c1">#sums the table for percentage calculation</span>
+    mat<span class="o">&lt;-</span> <span class="kp">as.data.frame</span><span class="p">(</span>tab<span class="p">)</span> <span class="c1"># saves meters squared</span>
+    mat<span class="o">$</span>Freq <span class="o">&lt;-</span> mat<span class="o">$</span>Freq<span class="o">/</span><span class="m">1e6</span> <span class="c1"># convert from m2 to km2</span>
+    mat2<span class="o">&lt;-</span> <span class="kp">as.data.frame</span><span class="p">(</span>tab<span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="o">/</span>s<span class="p">)</span> <span class="c1">#calculates percent</span>
+    final<span class="o">&lt;-</span><span class="kp">cbind</span><span class="p">(</span>port_df<span class="o">@</span>data<span class="o">$</span>Pcid<span class="p">,</span>mat<span class="p">,</span>mat2<span class="o">$</span>Freq<span class="p">)</span>
+    <span class="c1">#combines into single dataframe</span>
+    write.csv<span class="p">(</span>final<span class="p">,</span> <span class="kp">paste0</span><span class="p">(</span>poly<span class="p">,</span><span class="s">&quot;.csv&quot;</span><span class="p">))</span>
+  <span class="kr">return</span><span class="p">(</span>final<span class="p">)</span>
+<span class="p">}</span>
+
+hab_types<span class="p">(</span>port_polys<span class="p">[</span><span class="m">1</span><span class="p">])</span>
+</code></pre></div>
+</article>
+
+
+  <div class="share-page">
+  Share this post!
+
+  <div class="share-links">
+    
+      <a class = "fa fa-facebook" href="https://facebook.com/sharer.php?u=http://emfuller.github.io/snippets/2015/05/26/rasters-polygons/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=code for overlaying polygons and rasters&url=http://emfuller.github.io/snippets/2015/05/26/rasters-polygons/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://emfuller.github.io/snippets/2015/05/26/rasters-polygons/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://emfuller.github.io/snippets/2015/05/26/rasters-polygons/&title=code for overlaying polygons and rasters" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+  <div class="p2 wrap">
+    <div class="measure mt1 center">
+      <small>
+        All credit for website design goes to <a href="http://johnotander.com">John Otander</a> (<a href="https://twitter.com/4lpine">@4lpine</a>).<br>
+        &lt;/&gt; available on <a href="https://github.com/johnotander/pixyll">Github</a>.
+      </small>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
