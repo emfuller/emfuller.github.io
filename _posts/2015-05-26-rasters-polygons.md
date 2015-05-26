@@ -1,4 +1,5 @@
 ---
+layout: post
 date: 2015-05-26
 title: code for overlaying polygons and rasters
 summary: example code for overlaying poygons on rasters to extract landscape covariates

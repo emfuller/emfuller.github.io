@@ -1,4 +1,5 @@
 ---
+layout: post
 date: 2015-05-15
 title: how to organize reading?
 summary:
