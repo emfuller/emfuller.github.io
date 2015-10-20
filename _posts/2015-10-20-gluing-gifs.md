@@ -10,8 +10,8 @@ When I work with fine-scale movement data I inevitably want to make movies of th
 
 For example these two gifs show the trajectory of a pregnant moose and her step length (when the trajectory turns red, the moose is giving birth)
 
-![moose_traj](../images/moose_step_simple.gif)
-![moose_step](../images/moose_step-2.gif)
+![moose_traj](images/moose_step_simple.gif)
+![moose_step](images/moose_step-2.gif)
 
 I need to sew these two gifs together, and below is how I  figured out how to do it. [This answer](http://unix.stackexchange.com/a/53443) from stack overflow got me going in the right direction, but I modified the script a bit.
 
@@ -70,4 +70,4 @@ rm concat*
 
 Volia!
 
-![concat_moose](../images/output.gif)
+![concat_moose](images/output.gif)
