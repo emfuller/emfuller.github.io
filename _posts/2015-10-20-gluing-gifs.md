@@ -1,12 +1,17 @@
 ---
 layout: 	post
 date: 		2015-10-20 14:30:00
-title: 		Never forget, how to merge two gifs together
+title: 		How to merge two gifs together
 summary: 	example code for sewing together two gifs of animal movement into a single gif using imagemagick
 categories: snippets
 ---
 
 When I work with fine-scale movement data I inevitably want to make movies of them and share with collaborators. Many iterations later, I have long since lost my code (and the data) that I originally used to make these gifs but am too lazy to regenerate.
+
+For example these two gifs show the trajectory of a pregnant moose and her step length (when the trajectory turns red, the moose is giving birth)
+
+![moose_traj](../images/moose_step_simple.gif)
+![moose_step](../images/moose_step-2.gif)
 
 I need to sew these two gifs together, and below is how I  figured out how to do it. [This answer](http://unix.stackexchange.com/a/53443) from stack overflow got me going in the right direction, but I modified the script a bit.
 
@@ -62,3 +67,7 @@ rm -rf ../first
 rm -rf ../second
 rm concat*
 ```
+
+Volia!
+
+![concat_moose](../images/output.gif)
