@@ -45,26 +45,20 @@ cd third/
 for filename in ../first/*
 do
 	  filename=`basename $filename`
-	    montage -tile 1x2 -geometry 800x800 ../first/$filename ../second/$filename concat$filename
+	  montage -tile 1x2 -geometry 800x800 ../first/$filename ../second/$filename concat$filename
     done
 ```
 
 My hack was to change the original code to `-tile 1x2` which I'm guessing means one row, two columns. I changed the geometry argument to the largest image (800x800) which means there's some awkward whitespace around the 800x200 image. But because the backgrounds both white it doesn't matter.
 
-I should note: running this gives me the error
-
-```bash
-montage: unable to read font `(null)' @ error/annotate.c/RenderFreetype/1152.
-```
-
-which I ignore. I think it has something to do with the correct fonts installed (as per [here](http://www.imagemagick.org/discourse-server/viewtopic.php?t=20529)). But since neither of these images have font, I can get away without having to worry about it.
+I should note: running this gives me the error "montage: unable to read font (null) @ error/annotate.c/RenderFreetype/1152." which I ignore. I think it has something to do with the correct fonts installed (as per [here](http://www.imagemagick.org/discourse-server/viewtopic.php?t=20529)). But since neither of these images have font, I can get away without having to worry about it.
 
 Finally to make a new output, put together the images, also optimize and remove background to make the final gif smaller (goes from 18 Mb to 1.2 Mb roughly).
 
 ```bash
- convert -layers optimize -background None concatx* output.gif
+convert -layers optimize -background None concatx* output.gif
 
-  rm -rf ../first
-  rm -rf ../second
-  rm concat*
+rm -rf ../first
+rm -rf ../second
+rm concat*
 ```
