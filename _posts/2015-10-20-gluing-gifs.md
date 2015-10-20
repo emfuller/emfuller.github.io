@@ -1,7 +1,7 @@
 ---
 layout: post
 date: 2015-10-20
-title: Never forget: how to merge two gifs together
+title: Never forget, how to merge two gifs together
 summary: example code for sewing together two gifs of animal movement into a single gif using imagemagick
 categories: snippets
 ---
@@ -57,7 +57,7 @@ montage: unable to read font `(null)' @ error/annotate.c/RenderFreetype/1152.
 ```
  which I ignore. I think it has something to do with the correct fonts installed (as per [here](http://www.imagemagick.org/discourse-server/viewtopic.php?t=20529)). But since neither of these images have font, I can get away without having to worry about it.
 
- Finally to make a new output, put together the images, also optimize and remove background to make the final gif smaller (goes from 18 Mb to 1.2 Mb roughly). 
+ Finally to make a new output, put together the images, also optimize and remove background to make the final gif smaller (goes from 18 Mb to 1.2 Mb roughly).
 
 ```
  convert -layers optimize -background None concatx* output.gif
