@@ -29,7 +29,7 @@ As a co-leader of a [SESYNC](https://www.sesync.org/) funded graduate student wo
 
 Collaborators: [Talia Young](http://conbio.org/mini-sites/smith-fellows/meet-the-fellows/2016-fellows/talia-young), [Brad Dubik](http://bradforddubik.weebly.com/), [Josh Stoll](https://www.linkedin.com/in/joshua-stoll-3038a118), [Kaycee Colman](https://www.researchgate.net/profile/Kaycee_Coleman), [Mikaela Provost](https://twitter.com/mikaela_provost), Sara Bess Jones, Elizabeth Clark, [Kevin St. Martin](http://geography.rutgers.edu/people/faculty-core/92-faculty-stmartin), [Malin Pinsky](http://pinsky.marine.rutgers.edu/)
 
-## Large Ungulates
+## Predictin Parturition from GPS data in Large Ungulates
 Working with [Matt Hayes](http://wyocoopunit.org/people/matthew-hayes) at the University of Wyoming, we're using machine learning approaches to build a flexible classification algorithm to infer parturition events in North American large ungulates from GPS data. 
 
 Collaborators: [Matt Hayes](http://wyocoopunit.org/people/matthew-hayes)
