@@ -7,16 +7,15 @@ permalink: /cv/
 
 || |
 |:-:|---|
-| 2011 - present | PhD Ecolgy & Evolutionary Biology. Princeton University. Advisor: Simon Levin|
+| 2011 - 2016 | PhD Ecolgy & Evolutionary Biology. Princeton University. Advisor: Simon Levin. Thesis: "People, Fishing and the Management of a Human-Dominated Ecosystem|
 |2009 | B.A. Biology & Environmental Studies with honors. University of Chicago. Thesis: "Experimental Estimation of the Disease-Density Threshold of an Insect Virus". Advisor: Greg Dwyer
 
 ### Awards and Grants
 
-|| |
 |:-:|---|
-| 2014 | SESYNC graduate student working group - co leader
-| 2015 - 2016| Princeton Environmental Institute STEP Fellow | 
-|2011 - 2015| National Science Foundation Graduate Research Fellowship |
+| 2014 | SESYNC Graduate Research Fellow |
+| 2015 | NSF Grip Fellow | 
+|2011 - 2016| National Science Foundation Graduate Research Fellowship |
 |2011| The Charlotte and Morris Tanenbaum *52 Graduate Fellowship in the Physical or Life Sciences
 | 2008 | Champion Ward Third Year International Travel Grant |
 
