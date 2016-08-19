@@ -11,6 +11,7 @@ permalink: /cv/
 |2009 | B.A. Biology & Environmental Studies with honors. University of Chicago. Thesis: "Experimental Estimation of the Disease-Density Threshold of an Insect Virus". Advisor: Greg Dwyer
 
 ### Awards and Grants
+
 || |
 |:-:|---|
 | 2014 | SESYNC graduate student working group - co leader
