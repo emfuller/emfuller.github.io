@@ -4,7 +4,7 @@ permalink: /research/
 ---
 
 ## Dissertation
-My dissertation is focused on understanding how commercial fishermen affect (and are influenced by) the marine ecosystems from which they harvest. Using a large datasets describing commercial fishing, fish abundance and environmental data, I'm examining the implications of human coupling of disparate marine food webs. 
+My dissertation focused on understanding how commercial fishermen affect (and are influenced by) the marine ecosystems from which they harvest. Using a large datasets describing commercial fishing, fish abundance and environmental data, I examine the implications of human coupling of disparate marine food webs. 
 
 ### Range shifts and harvesting: a simple model
 This study extends a theoretical model to examine how a population of fish would be affected by the joint pressures of two stressors: climate-change-driven range shifts and harvest. In this model we explore not only the possible synergy of the two stressors, but also examine the outcomes of two common forms of management. We find that, while these stressors are approximately additive, the management recommended is sensitive to the assumptions made on how effort is reallocated. This theoretical model, built with the aim of determining the sensitivity of marine fish to joint biophysical stressors, instead emphasizes the importance of understanding human behavior. This result dovetails with existing theoretical work suggesting that the dynamics of harvesters, i.e. how they respond to changes in the ecological conditions, can determine the stability of a system and ability to be managed sustainably 
